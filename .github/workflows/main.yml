@@ -8,13 +8,13 @@ on :
 
 jobs:
     get_environment_name_from_git_ref:
-        name: get_environment_value
-        runs-on : ubuntu-latest
+        name: Get Environment Name From Git Ref
+        runs-on: ubuntu-latest
         steps:
-            -name : checkout
-             uses : action/checkout@v3
+          - name: Checkout
+            uses: actions/checkout@v3
 
-            -name: Set environment name dynamically
+          - name: Set environment name dynamically
             id: setenv
             run:  echo "env" >> $GITHUB_OUTPUT
 
@@ -27,19 +27,19 @@ jobs:
         needs: [get_environment_name_from_git_ref]
         environment : ${{needs.get_environment_name_from_git_ref.outputs.env}}
         steps:
-            -name: checlout
-            uses : action/checkout@v3
+            - name: checlout
+              uses : action/checkout@v3
 
-            -name : install npm
-            uses: actions/setup-node@v3
-            with:
-              node-version: 16.X
+            - name : install npm
+              uses: actions/setup-node@v3
+              with:
+                node-version: 16.X
 
-            -name: install npm packages
-            run : npm install
+            - name: install npm packages
+              run : npm install
 
-            -name : test case
-            run : npm test
+            - name : test case
+              run : npm test
 
     Build_app :
         name: Build app
@@ -47,19 +47,19 @@ jobs:
         needs: [get_environment_name_from_git_ref]
         environment : ${{needs.get_environment_name_from_git_ref.outputs.env}}
         steps:
-            -name : checkout
-            uses: action/checkout@v3
+            - name : checkout
+              uses: action/checkout@v3
 
-            -name : install npm 
-            uses : action/setup-node@v3
-            with:
+            - name : install npm 
+              uses : action/setup-node@v3
+              with:
                 node-version: 16.X
             
-            -name : install node packages
-            run : npm install
+            - name : install node packages
+              run : npm install
 
-            -name : build app
-            run : npm run build
+            - name : build app
+              run : npm run build
 
 
 
